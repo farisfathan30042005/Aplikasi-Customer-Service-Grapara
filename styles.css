@@ -1,0 +1,14 @@
+.container {
+    margin-top: 50px;
+}
+.hero {
+    background-color: #2961aa;
+    padding: 50px 0;
+    text-align: center;
+}
+.hero h1 {
+    margin-bottom: 20px;
+}
+.card {
+    margin-bottom: 20px;
+}

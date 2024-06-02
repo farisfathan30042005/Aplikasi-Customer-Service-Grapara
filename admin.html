@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Grapara</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Panel</h2>
+    <ul class="nav nav-tabs" id="adminTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="user-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Manage Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="desk-tab" data-toggle="tab" href="#desks" role="tab" aria-controls="desks" aria-selected="false">Manage Service Desks</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="adminTabContent">
+        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
+            <h3 class="mt-3">User Management</h3>
+            <!-- User management form -->
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select class="form-control" id="role" required>
+                        <option value="CS">Customer Service</option>
+                        <option value="Manager">Manager</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add User</button>
+            </form>
+            <!-- User table -->
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User data goes here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="desks" role="tabpanel" aria-labelledby="desk-tab">
+            <h3 class="mt-3">Service Desk Management</h3>
+            <!-- Service desk management form -->
+            <form id="deskForm">
+                <div class="form-group">
+                    <label for="deskNumber">Desk Number</label>
+                    <input type="number" class="form-control" id="deskNumber" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Desk</button>
+            </form>
+            <!-- Desk table -->
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Desk Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Desk data goes here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
