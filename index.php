@@ -4,13 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Service</title>
-    <link rel="stylesheet" href="stylesz.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+    <?php 
+    include 'koneksi.php';
+    if(isset($_GET['pesan'])){
+        if($_GET['pesan'] == "gagal"){
+            echo '<script type="text/JavaScript">';
+            echo 'alert("Login gagal! username dan password salah!")';
+            echo '</script>';
+        }else if($_GET['pesan'] == "logout"){
+            echo '<script type="text/JavaScript">';
+            echo 'alert("Anda telah berhasil logout")';
+            echo '</script>';
+        }else if($_GET['pesan'] == "belum_login"){
+            echo '<script type="text/JavaScript">';
+            echo 'alert("Anda harus login untuk mengakses halaman admin")';
+            echo '</script>';
+        }
+    }
+    ?>
 
     <header>
-        <h1 class="grap">GRAPARA CUSTOMER SERVICE</h1>
+        <h1>Grapara Customers Service</h1>
         <h2>Manage your customer service operations efficiently</h2>
     </header>
 
@@ -21,13 +39,12 @@
             <form method="post" action="cek_login.php">
                 <table>
                     <tr>
-                        <td><input type="text" name="username" placeholder="Masukkan username"></td>
+                        <input type="text" name="username" placeholder="Masukkan username">
                     </tr>
                     <tr>
-                        <td><input type="password" name="password" placeholder="Masukkan password"></td>
+                        <input type="password" name="password" placeholder="Masukkan password">
                     </tr>
-                    <tr>
-                        <td><button type="submit" style="background: linear-gradient(to right, #141e30, #243b55); color: #fff; border: 0;">Login</button></td>
+                        <button><input style="background: linear-gradient(to right, #141e30, #243b55); color: #fff; border: 0;" type="submit" value="Login"></button>
                     </tr>
                 </table>            
             </form>
@@ -53,9 +70,9 @@
 
     <div class="section-container">
         <div class="section">
-            <h2>Admin</h2>
-            <p>Manage users and service desks</p>
-            <button class="nav-button" onclick="showLoginPopup()">Go To Admin Panel</button>
+        <h2>Admin</h2>
+        <p>Manage users and service desks</p>
+        <button class="nav-button" onclick="showLoginPopup()">Go To Admin Panel</button>
         </div>
         <div class="section">
             <h2>Customer</h2>
@@ -67,15 +84,14 @@
             <p>Log in and manage customer</p>
             <a href="customer.php" class="nav-button">Go to CS Panel</a>
         </div>
-        <div class="section">
-            <h2>Manager</h2>
-            <p>View service statistics and reports</p>
-            <button class="nav-button" onclick="showLoginPopup()">Go To Manager Panel</button>
+       <div class="section">
+        <h2>Manager</h2>
+        <p>View service statistics and reports</p>
+        <button class="nav-button" onclick="showLoginPopup()">Go To Manager Panel</button>
         </div>
     </div>
 
-    <footer class="footer"><p>Grapara Customer Service Simulator All Rights Reserved. <br>
-    ©Kelompok 1 - MKB 2A 2024 </p></footer>
+    <footer class="footer"><p>© 2024 Grapara Customer Service Simulator Kelompok 1. All Rights Reserved.</p></footer>
 
     <script src="scripts.js"></script>
 </body>
