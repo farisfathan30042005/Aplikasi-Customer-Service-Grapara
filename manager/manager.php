@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "admin_panel";
+$dbname = "grapara";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -48,6 +48,15 @@ $conn->close();
 
 <div class="container">
     <h2>Manager Panel</h2>
+    <ul class="nav nav-tabs" id="managerTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="manager-tab" data-toggle="tab" href="#manager" role="tab" aria-controls="manager" aria-selected="true">View Report</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="logout-tab" aria-controls="logout" aria-selected="false" onclick="javascript:return confirm('Apakah Anda yakin ingin logout?');" href="../autentikasi/logout.php">Logout</></a>
+        </li>
+    </ul>
+
     <div id="serviceStats" class="mt-3">
         <h3>Service Statistics</h3>
         <ul>

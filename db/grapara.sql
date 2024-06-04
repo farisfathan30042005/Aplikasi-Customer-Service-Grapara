@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Bulan Mei 2024 pada 17.38
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: May 25, 2024 at 10:41 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `admin_panel`
+-- Database: `grapara`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `cs_performance`
+-- Table structure for table `cs_performance`
 --
 
 CREATE TABLE `cs_performance` (
@@ -34,7 +34,7 @@ CREATE TABLE `cs_performance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `cs_performance`
+-- Dumping data for table `cs_performance`
 --
 
 INSERT INTO `cs_performance` (`id`, `cs_name`, `performance_score`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `cs_performance` (`id`, `cs_name`, `performance_score`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customer_issues`
+-- Table structure for table `customer_issues`
 --
 
 CREATE TABLE `customer_issues` (
@@ -57,7 +57,7 @@ CREATE TABLE `customer_issues` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `customer_issues`
+-- Dumping data for table `customer_issues`
 --
 
 INSERT INTO `customer_issues` (`id`, `desk_number`, `customer_queue_number`, `issue`, `solution`) VALUES
@@ -69,7 +69,7 @@ INSERT INTO `customer_issues` (`id`, `desk_number`, `customer_queue_number`, `is
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `desks`
+-- Table structure for table `desks`
 --
 
 CREATE TABLE `desks` (
@@ -78,7 +78,7 @@ CREATE TABLE `desks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `desks`
+-- Dumping data for table `desks`
 --
 
 INSERT INTO `desks` (`id`, `desk_number`) VALUES
@@ -90,7 +90,7 @@ INSERT INTO `desks` (`id`, `desk_number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `queue`
+-- Table structure for table `queue`
 --
 
 CREATE TABLE `queue` (
@@ -100,7 +100,7 @@ CREATE TABLE `queue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `queue`
+-- Dumping data for table `queue`
 --
 
 INSERT INTO `queue` (`id`, `phone`, `queue_number`) VALUES
@@ -113,7 +113,7 @@ INSERT INTO `queue` (`id`, `phone`, `queue_number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `service_stats`
+-- Table structure for table `service_stats`
 --
 
 CREATE TABLE `service_stats` (
@@ -126,27 +126,29 @@ CREATE TABLE `service_stats` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
   `role` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `role`) VALUES
-(3, 'faris', 'CS'),
-(4, 'kautsar', 'Manager');
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+(1, 'admin', 'admin', 'Admin'),
+(2, 'kautsar', 'kautsar', 'Manager'),
+(3, 'faris', 'faris', 'CS');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `weekly_report`
+-- Table structure for table `weekly_report`
 --
 
 CREATE TABLE `weekly_report` (
@@ -160,89 +162,89 @@ CREATE TABLE `weekly_report` (
 --
 
 --
--- Indeks untuk tabel `cs_performance`
+-- Indexes for table `cs_performance`
 --
 ALTER TABLE `cs_performance`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `customer_issues`
+-- Indexes for table `customer_issues`
 --
 ALTER TABLE `customer_issues`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `desks`
+-- Indexes for table `desks`
 --
 ALTER TABLE `desks`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `queue`
+-- Indexes for table `queue`
 --
 ALTER TABLE `queue`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `service_stats`
+-- Indexes for table `service_stats`
 --
 ALTER TABLE `service_stats`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `weekly_report`
+-- Indexes for table `weekly_report`
 --
 ALTER TABLE `weekly_report`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `cs_performance`
+-- AUTO_INCREMENT for table `cs_performance`
 --
 ALTER TABLE `cs_performance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `customer_issues`
+-- AUTO_INCREMENT for table `customer_issues`
 --
 ALTER TABLE `customer_issues`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `desks`
+-- AUTO_INCREMENT for table `desks`
 --
 ALTER TABLE `desks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `queue`
+-- AUTO_INCREMENT for table `queue`
 --
 ALTER TABLE `queue`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `service_stats`
+-- AUTO_INCREMENT for table `service_stats`
 --
 ALTER TABLE `service_stats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `weekly_report`
+-- AUTO_INCREMENT for table `weekly_report`
 --
 ALTER TABLE `weekly_report`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "admin_panel";
+$dbname = "grapara";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -36,7 +36,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer - Grapara</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
@@ -45,8 +45,9 @@ $conn->close();
     <form id="queueForm" method="post" action="">
         <div class="form-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" name="phone" required>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Masukkan phone number" required>
         </div>
+        <a href="../index.php" class="btn btn-success">Back to Home</a>
         <button type="submit" class="btn btn-primary">Get Queue Number</button>
     </form>
     <div id="queueNumber" class="mt-3">

@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "admin_panel";
+$dbname = "grapara";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -49,7 +49,7 @@ if (isset($_POST['deleteDesk'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Grapara</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
@@ -62,6 +62,9 @@ if (isset($_POST['deleteDesk'])) {
         <li class="nav-item">
             <a class="nav-link" id="desk-tab" data-toggle="tab" href="#desks" role="tab" aria-controls="desks" aria-selected="false">Manage Service Desks</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="logout-tab" aria-controls="logout" aria-selected="false" onclick="javascript:return confirm('Apakah Anda yakin ingin logout?');" href="../autentikasi/logout.php">Logout</></a>
+        </li>
     </ul>
     <div class="tab-content" id="adminTabContent">
         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
@@ -70,11 +73,12 @@ if (isset($_POST['deleteDesk'])) {
             <form id="userForm" method="POST" action="">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
                 </div>
                 <div class="form-group">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role" required>
+                        <option value="Admin">Admin</option>
                         <option value="CS">Customer Service</option>
                         <option value="Manager">Manager</option>
                     </select>
@@ -117,7 +121,7 @@ if (isset($_POST['deleteDesk'])) {
             <form id="deskForm" method="POST" action="">
                 <div class="form-group">
                     <label for="deskNumber">Desk Number</label>
-                    <input type="number" class="form-control" id="deskNumber" name="deskNumber" required>
+                    <input type="number" class="form-control" id="deskNumber" name="deskNumber" placeholder="Masukkan desk number" required>
                 </div>
                 <button type="submit" class="btn btn-primary" name="addDesk">Add Desk</button>
             </form>

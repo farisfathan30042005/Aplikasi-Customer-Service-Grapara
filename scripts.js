@@ -23,12 +23,22 @@ document.getElementById('customer').addEventListener('click', () => alert('Custo
 document.getElementById('customer-service').addEventListener('click', () => alert('Customer Service button clicked'));
 document.getElementById('manager').addEventListener('click', () => alert('Manager button clicked'));
 
-function showLoginPopup() {
-    document.getElementById('loginPopup').style.display = 'block';
+function showLoginPopupAdmin() {
+    document.getElementById('loginPopupAdmin').style.display = 'block';
+}
+
+function showLoginPopupCS() {
+    document.getElementById('loginPopupCS').style.display = 'block';
+}
+
+function showLoginPopupManager() {
+    document.getElementById('loginPopupManager').style.display = 'block';
 }
 
 function closeLoginPopup() {
-    document.getElementById('loginPopup').style.display = 'none';
+    document.getElementById('loginPopupAdmin').style.display = 'none';
+    document.getElementById('loginPopupCS').style.display = 'none';
+    document.getElementById('loginPopupManager').style.display = 'none';
 }
 
 function authenticateAndRedirect() {
