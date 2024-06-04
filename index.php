@@ -1,108 +1,117 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "admin_panel";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Service</title>
+    <title>Grapara Customer Service Simulator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <?php 
-    include 'koneksi.php';
-	if(isset($_GET['pesan'])){
-		if($_GET['pesan'] == "gagal"){
-            echo '<script type="text/JavaScript">';
-			echo 'alert("Login gagal! username dan password salah!")';
-            echo '</script>';
-		}else if($_GET['pesan'] == "logout"){
-            echo '<script type="text/JavaScript">';
-			echo 'alert("Anda telah berhasil logout")';
-            echo '</script>';
-		}else if($_GET['pesan'] == "belum_login"){
-            echo '<script type="text/JavaScript">';
-			echo 'alert("Anda harus login untuk mengakses halaman admin")';
-            echo '</script>';
-		}
-	}
-	?>
-
-    <header>
-        <h1>Grapara Customer Service</h1>
-        <h2>Manage your customer service operations efficiently</h2>
-    </header>
-
-    <!-- <div id="loginPopup" class="login-popup">
-        <div class="login-popup-content">
-            <h1 class="log1n">Login</h1>
-            <span class="close" onclick="closeLoginPopup()">&times;</span>
-            <input type="text" placeholder="Username" name="username">
-            <input type="password" placeholder="Password" name="password">
-            <button onclick="authenticateAndRedirect()">Login</button>
-        </div>
-    </div> -->
-
-    <div id="loginPopup" class="login-popup">
-        <div class="login-popup-content">
-            <h1 class="log1n">Login</h1>
-            <span class="close" onclick="closeLoginPopup()">&times;</span>
-            <form method="post" action="cek_login.php">
-		        <table>
-			        <tr>
-				        <input type="text" name="username" placeholder="Masukkan username">
-			        </tr>
-			        <tr>
-				        <input type="password" name="password" placeholder="Masukkan password">
-			        </tr>
-				        <button><input style="background: linear-gradient(to right, #141e30, #243b55); color: #fff; border: 0;" type="submit" value="Login"></button>
-			        </tr>
-		        </table>			
-	        </form>
+<header>
+    <div class="hero" style="background-color: #2a7dea; font-weight: 600;">
+        <h1>Grapara Customer Service Simulator</h1>
+        <p>Manage your customer service operations efficiently</p>
+        <div id="headerCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <h3>Efficient Customer Support</h3>
+                    <p>We provide efficient customer support to handle all your queries.</p>
+                </div>
+                <div class="carousel-item">
+                    <h3>24/7 Availability</h3>
+                    <p>Our customer service is available 24/7 to assist you.</p>
+                </div>
+                <div class="carousel-item">
+                    <h3>Seamless Experience</h3>
+                    <p>Enjoy a seamless experience with our customer service simulator.</p>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#headerCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#headerCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </div>
+</header>
 
-    <div class="carousel-container">
-        <div class="carousel-slide">
-            <div class="carousel-text">
-                <h2>Seamless Experience</h2>
-                <p>Enjoy a seamless experience with our customer service simulator.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Admin</h5>
+                    <p class="card-text">Manage users and service desks</p>
+                    <a href="admin.php" class="btn btn-primary">Go to Admin Panel</a>
+                </div>
             </div>
-            <div class="carousel-text">
-                <h2>Efficient Customer Support</h2>
-                <p>We provide efficient customer support to handle all your queries.</p>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Customer</h5>
+                    <p class="card-text">Get your queue number</p>
+                    <a href="customer.php" class="btn btn-primary">Get Queue Number</a>
+                </div>
             </div>
-            <div class="carousel-text">
-                <h2>24/7 Availability</h2>
-                <p>Our customer service is available 24/7 to assist you.</p>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Customer Service</h5>
+                    <p class="card-text">Log in and manage customer issues</p>
+                    <a href="cs.php" class="btn btn-primary">Go to CS Panel</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manager</h5>
+                    <p class="card-text">View service statistics and reports</p>
+                    <a href="manager.php" class="btn btn-primary">Go to Manager Panel</a>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="section-container">
-        <div class="section">
-        <h2>Admin</h2>
-        <p>Manage users and service desks</p>
-        <button class="nav-button" onclick="showLoginPopup()">Go To Admin Panel</button>
-        </div>
-        <div class="section">
-            <h2>Customer</h2>
-            <p>Get your queue number</p>
-            <a href="customer.html" class="nav-button" id="customer">Get Queue Number</a>
-        </div>
-        <div class="section">
-            <h2>Customer Service</h2>
-            <p>Log in and manage customer</p>
-            <a href="cs.html" class="nav-button">Go to CS Panel</a>
-        </div>
-       <div class="section">
-        <h2>Manager</h2>
-        <p>View service statistics and reports</p>
-        <button class="nav-button" onclick="showLoginPopup()">Go To Manager Panel</button>
-        </div>
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 Grapara Customer Service Simulator. All Rights Reserved.</p>
     </div>
+</footer>
 
-    <footer class="footer"><p>© 2024 Grapara Customer Service Simulator Kelompok 1. All Rights Reserved.</p></footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="scripts.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#headerCarousel').carousel({
+            interval: 3000 // Change this value (in milliseconds) according to your needs
+        });
+    });
+</script>
+
 </body>
 </html>
