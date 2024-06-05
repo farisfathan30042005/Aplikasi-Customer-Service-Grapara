@@ -13,6 +13,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Get data meja CS
+$id = $_GET['id'];
+$result = mysqli_query($conn, "SELECT * FROM desks WHERE id = $id");
+while($data = mysqli_fetch_array($result))
+{
+    $deskNumber = $data['desk_number'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +48,7 @@ if ($conn->connect_error) {
             <form id="deskForm" method="POST" action="">
                 <div class="form-group">
                     <label for="deskNumber">Desk Number</label>
-                    <input type="number" class="form-control" id="deskNumber" name="deskNumber" placeholder="Masukkan desk number" required disabled>
+                    <input type="text" class="form-control" id="deskNumber" name="deskNumber" value="<?php echo $deskNumber?>" placeholder="Masukkan desk number" required disabled>
                 </div>
                 <a href="admin.php" class="btn btn-success">Back</a>
             </form>

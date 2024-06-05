@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2024 at 12:48 AM
+-- Generation Time: Jun 06, 2024 at 12:31 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -34,15 +34,6 @@ CREATE TABLE `cs_performance` (
   `performance_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `cs_performance`
---
-
-INSERT INTO `cs_performance` (`id`, `cs_name`, `performance_score`) VALUES
-(1, 'afnan', 10),
-(2, 'faiz', 10),
-(3, 'iva', 10);
-
 -- --------------------------------------------------------
 
 --
@@ -59,15 +50,6 @@ CREATE TABLE `customer_history` (
   `end_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `customer_history`
---
-
-INSERT INTO `customer_history` (`id`, `customer_queue_number`, `desk_number`, `issue`, `solution`, `start_time`, `end_time`) VALUES
-(1, 1, 1101, 'Pemadaman listrik di area rumah sakit', 'Hubungi call center PLN (123)', '2024-06-06 00:34:50', '2024-06-06 00:36:23'),
-(2, 2, 1102, 'Keterlambatan jadwal keberangkatan kereta api', 'Informasi lebih lanjut hubungi petugas terdekat', '2024-06-06 00:41:58', '2024-06-06 00:43:10'),
-(3, 3, 2101, 'Membutuhkan bantuan darurat', 'Hubungi portal layanan panggilan darurat (112)', '2024-06-06 00:44:26', '2024-06-06 00:47:13');
-
 -- --------------------------------------------------------
 
 --
@@ -83,15 +65,6 @@ CREATE TABLE `customer_issues` (
   `start_time` datetime NOT NULL DEFAULT current_timestamp(),
   `end_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `customer_issues`
---
-
-INSERT INTO `customer_issues` (`id`, `desk_number`, `customer_queue_number`, `issue`, `solution`, `start_time`, `end_time`) VALUES
-(1, 1101, 1, 'Pemadaman listrik di area rumah sakit', 'Hubungi call center PLN (123)', '2024-06-06 00:34:50', '2024-06-06 00:36:23'),
-(2, 1102, 2, 'Keterlambatan jadwal keberangkatan kereta api', 'Informasi lebih lanjut hubungi petugas terdekat', '2024-06-06 00:41:58', '2024-06-06 00:43:10'),
-(3, 2101, 3, 'Membutuhkan bantuan darurat', 'Hubungi portal layanan panggilan darurat (112)', '2024-06-06 00:44:26', '2024-06-06 00:47:13');
 
 -- --------------------------------------------------------
 
@@ -133,9 +106,9 @@ CREATE TABLE `queue` (
 --
 
 INSERT INTO `queue` (`id`, `phone`, `queue_number`, `status_pelayanan`) VALUES
-(1, '087888698891', 1, 'sudah_dilayani'),
-(2, '087738919399', 2, 'sudah_dilayani'),
-(3, '087888698896', 3, 'sudah_dilayani'),
+(1, '087888698891', 1, 'belum'),
+(2, '087738919399', 2, 'belum'),
+(3, '087888698896', 3, 'belum'),
 (4, '087888698891', 4, 'belum'),
 (5, '087738919399', 5, 'belum'),
 (6, '085175280207', 6, 'belum'),
@@ -252,19 +225,19 @@ ALTER TABLE `weekly_report`
 -- AUTO_INCREMENT for table `cs_performance`
 --
 ALTER TABLE `cs_performance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customer_history`
 --
 ALTER TABLE `customer_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customer_issues`
 --
 ALTER TABLE `customer_issues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `desks`

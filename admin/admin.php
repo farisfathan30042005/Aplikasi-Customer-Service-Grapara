@@ -27,15 +27,9 @@ if (isset($_POST['addUser'])) {
     $role = $_POST['role'];
     $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$password', '$role')";
     $conn->query($sql);
-}
-
-// Query ubah data user
-if (isset($_POST['updateUser'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
-    $sql = "UPDATE users SET username = $username, password = $password, role = $role WHERE id = $id";
-    $conn->query($sql);
+    if($conn){
+		echo"<script> alert('Data berhasil ditambahkan');</script>";
+		}
 }
 
 // Query hapus data user
@@ -43,20 +37,19 @@ if (isset($_POST['deleteUser'])) {
     $id = $_POST['userId'];
     $sql = "DELETE FROM users WHERE id = $id";
     $conn->query($sql);
+    if($conn){
+		echo"<script> alert('Data berhasil dihapus');</script>";
+		}
 }
 
 // Query tambah data meja CS
 if (isset($_POST['addDesk'])) {
     $deskNumber = $_POST['deskNumber'];
-    $sql = "INSERT INTO desks (desk_number) VALUES ($deskNumber)";
+    $sql = "INSERT INTO desks (desk_number) VALUES ('$deskNumber')";
     $conn->query($sql);
-}
-
-// Query ubah data meja CS
-if (isset($_POST['updateDesk'])) {
-    $deskNumber = $_POST['deskNumber'];
-    $sql = "UPDATE desks SET desk_number = $deskNumber WHERE id = $id";
-    $conn->query($sql);
+    if($conn){
+		echo"<script> alert('Data berhasil ditambahkan');</script>";
+		}
 }
 
 // Query hapus data meja CS
@@ -64,6 +57,9 @@ if (isset($_POST['deleteDesk'])) {
     $id = $_POST['deskId'];
     $sql = "DELETE FROM desks WHERE id = $id";
     $conn->query($sql);
+    if($conn){
+		echo"<script> alert('Data berhasil dihapus');</script>";
+		}
 }
 ?>
 
@@ -109,7 +105,7 @@ if (isset($_POST['deleteDesk'])) {
                 <div class="form-group">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role" required>
-                        <option value="Admin">Admin</option>
+                        <option value="">--Silahkan Pilih User Role--</option>
                         <option value="CS">Customer Service</option>
                         <option value="Manager">Manager</option>
                     </select>
@@ -120,7 +116,7 @@ if (isset($_POST['deleteDesk'])) {
             <table class="table mt-3">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Username</th>
                         <th>Password</th>
                         <th>Role</th>
@@ -129,10 +125,11 @@ if (isset($_POST['deleteDesk'])) {
                 </thead>
                 <tbody>
                     <?php
+                    $no=1;
                     $result = $conn->query("SELECT * FROM users");
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
-                                <td>{$row['id']}</td>
+                                <td>$no</td>
                                 <td>{$row['username']}</td>
                                 <td><input type='password' id='passwordTb' name='passwordTb' value='{$row['password']}' style='border: 0; background: #f0f0f0; width: 80px;' disabled>
                                 </td>
@@ -140,12 +137,13 @@ if (isset($_POST['deleteDesk'])) {
                                 <td>
                                     <form method='POST' action='' style='display:inline-block;'>
                                         <input type='hidden' name='userId' value='{$row['id']}'>
-                                        <a href='view_manageuser.php' class='btn btn-success btn-sm'>View</a>
-                                        <a href='edit_manageuser.php' class='btn btn-warning btn-sm'>Edit</a>
-                                        <button type='submit' name='deleteUser' class='btn btn-danger btn-sm'>Delete</button>
+                                        <a href='view_manageuser.php?id={$row['id']}' class='btn btn-success btn-sm'>View</a>
+                                        <a href='edit_manageuser.php?id={$row['id']}' class='btn btn-warning btn-sm'>Edit</a>
+                                        <button type='submit' name='deleteUser' onClick='return confirm(\"Apakah yakin ingin menghapus data dengan username: {$row['username']}?\")' class='btn btn-danger btn-sm'>Delete</button>
                                     </form>
                                 </td>
                             </tr>";
+                            $no++;
                     }
                     ?>
                 </tbody>
@@ -157,7 +155,7 @@ if (isset($_POST['deleteDesk'])) {
             <form id="deskForm" method="POST" action="">
                 <div class="form-group">
                     <label for="deskNumber">Desk Number</label>
-                    <input type="number" class="form-control" id="deskNumber" name="deskNumber" placeholder="Masukkan desk number" required>
+                    <input type="text" class="form-control" id="deskNumber" name="deskNumber" placeholder="Masukkan desk number" required>
                 </div>
                 <button type="submit" class="btn btn-primary" name="addDesk">Add Desk</button>
             </form>
@@ -165,27 +163,29 @@ if (isset($_POST['deleteDesk'])) {
             <table class="table mt-3">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Desk Number</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
+                    $no=1;
                     $result = $conn->query("SELECT * FROM desks");
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
-                                <td>{$row['id']}</td>
+                                <td>$no</td>
                                 <td>{$row['desk_number']}</td>
                                 <td>
                                     <form method='POST' action='' style='display:inline-block;'>
                                         <input type='hidden' name='deskId' value='{$row['id']}'>
-                                        <a href='view_deskmanage.php' class='btn btn-success btn-sm'>View</a>
-                                        <a href='edit_deskmanage.php' class='btn btn-warning btn-sm'>Edit</a>
-                                        <button type='submit' name='deleteDesk' class='btn btn-danger btn-sm'>Delete</button>
+                                        <a href='view_deskmanage.php?id={$row['id']}' class='btn btn-success btn-sm'>View</a>
+                                        <a href='edit_deskmanage.php?id={$row['id']}' class='btn btn-warning btn-sm'>Edit</a>
+                                        <button type='submit' name='deleteDesk' onClick='return confirm(\"Apakah yakin ingin menghapus data meja: {$row['desk_number']}?\")' class='btn btn-danger btn-sm'>Delete</button>
                                     </form>
                                 </td>
                             </tr>";
+                            $no++;
                     }
                     ?>
                 </tbody>

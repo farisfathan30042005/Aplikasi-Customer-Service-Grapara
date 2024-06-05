@@ -13,13 +13,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Get data user
+$id = $_GET['id'];
+$result = mysqli_query($conn, "SELECT * FROM users WHERE id = $id");
+while($data = mysqli_fetch_array($result))
+{
+    $username = $data['username'];
+    $password = $data['password'];
+    $role = $data['role'];
+}
+
 // Query ubah data user
 if (isset($_POST['updateUser'])) {
+    $id = $_GET['id'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     $role = $_POST['role'];
-    $sql = "UPDATE users SET username = $username, password = $password, role = $role WHERE id = $id";
+    $sql = "UPDATE users SET id = '$id', username = '$username', password = '$password', role = '$role' WHERE id = '$id'";
     $conn->query($sql);
+    if($conn){
+		echo"<script> alert('Data berhasil diubah'); document.location='admin.php'</script>";
+		}
 }
 ?>
 
@@ -49,19 +63,19 @@ if (isset($_POST['updateUser'])) {
             <form id="userForm" method="POST" action="">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
+                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username?>" placeholder="Masukkan username" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $password?>" placeholder="Masukkan password" required>
                     <input type="checkbox" onclick="showHidePwd()"> Show Password
                 </div>
                 <div class="form-group">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role" required>
-                        <option value="Admin">Admin</option>
-                        <option value="CS">Customer Service</option>
-                        <option value="Manager">Manager</option>
+                        <option value="">--Silahkan Pilih User Role--</option>
+                        <option <?php if($role=='CS'){echo 'selected';} ?> value="CS">CS</option>
+                        <option <?php if($role=='Manager'){echo 'selected';} ?> value="Manager">Manager</option>
                     </select>
                 </div>
                 <a href="admin.php" class="btn btn-success">Back</a>

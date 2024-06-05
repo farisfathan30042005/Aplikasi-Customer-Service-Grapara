@@ -12,6 +12,16 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Get data user
+$id = $_GET['id'];
+$result = mysqli_query($conn, "SELECT * FROM users WHERE id = $id");
+while($data = mysqli_fetch_array($result))
+{
+    $username = $data['username'];
+    $password = $data['password'];
+    $role = $data['role'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,19 +50,17 @@ if ($conn->connect_error) {
             <form id="userForm" method="POST" action="">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required disabled>
+                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username?>" placeholder="Masukkan username" required disabled>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required disabled>
+                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $password?>" placeholder="Masukkan password" required disabled>
                     <input type="checkbox" onclick="showHidePwd()"> Show Password
                 </div>
                 <div class="form-group">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role" required disabled>
-                        <option value="Admin">Admin</option>
-                        <option value="CS">Customer Service</option>
-                        <option value="Manager">Manager</option>
+                        <option value="<?php echo $role?>" selected><?php echo $role?></option>
                     </select>
                 </div>
                 <a href="admin.php" class="btn btn-success">Back</a>

@@ -13,11 +13,23 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Get data meja CS
+$id = $_GET['id'];
+$result = mysqli_query($conn, "SELECT * FROM desks WHERE id = $id");
+while($data = mysqli_fetch_array($result))
+{
+    $deskNumber = $data['desk_number'];
+}
+
 // Query ubah data meja CS
 if (isset($_POST['updateDesk'])) {
+    $id = $_GET['id'];
     $deskNumber = $_POST['deskNumber'];
-    $sql = "UPDATE desks SET desk_number = $deskNumber WHERE id = $id";
+    $sql = "UPDATE desks SET id = '$id', desk_number = '$deskNumber' WHERE id = '$id'";
     $conn->query($sql);
+    if($conn){
+		echo"<script> alert('Data berhasil diubah'); document.location='admin.php'</script>";
+		}
 }
 ?>
 
@@ -47,7 +59,7 @@ if (isset($_POST['updateDesk'])) {
             <form id="deskForm" method="POST" action="">
                 <div class="form-group">
                     <label for="deskNumber">Desk Number</label>
-                    <input type="number" class="form-control" id="deskNumber" name="deskNumber" placeholder="Masukkan desk number" required>
+                    <input type="text" class="form-control" id="deskNumber" name="deskNumber" value="<?php echo $deskNumber?>" placeholder="Masukkan desk number" required>
                 </div>
                 <a href="admin.php" class="btn btn-success">Back</a>
                 <button type="submit" class="btn btn-primary" name="updateDesk">Edit Desk</button>

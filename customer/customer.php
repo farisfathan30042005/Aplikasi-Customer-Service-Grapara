@@ -46,7 +46,7 @@ $conn->close();
     <form id="queueForm" method="post" action="">
         <div class="form-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Masukkan phone number" required>
+            <input type="number" class="form-control" id="phone" name="phone" placeholder="Masukkan phone number"  pattern="[0-9]" minlength="10" maxlength="13" required>
         </div>
         <a href="../index.php" class="btn btn-success">Back to Home</a>
         <button type="submit" class="btn btn-primary">Get Queue Number</button>
