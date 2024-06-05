@@ -15,46 +15,19 @@ if ($conn->connect_error) {
 
 // Cek status login
 session_start();
-  if (!isset($_SESSION['status']))
-   {
-      header("location:../index.php?pesan=belum_login");
-   }
-
-// Handle login
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deskNumber'])) {
-    $deskNumber = $_POST['deskNumber'];
-    // You can perform additional validation here if needed
-
-    // If the desk number is valid, you can proceed to serve the customer
-    // For now, let's assume the desk number is valid and proceed
+if (!isset($_SESSION['status'])) {
+    header("location:../index.php?pesan=belum_login");
 }
 
-// Query rekam permasalahan customer
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['recordIssue'])) {
-    $deskNumber = $_POST['deskNumber'];
-    $customerQueueNumber = $_POST['customerQueueNumber'];
-    $issue = $_POST['issue'];
-    $solution = $_POST['solution'];
+// Query untuk mengambil nomor antrian yang belum dilayani
+$query = "SELECT id, queue_number FROM queue WHERE id NOT IN (SELECT customer_queue_number FROM customer_issues)";
+$result = $conn->query($query);
 
-    // Insert data into cs_performance table
-    $stmt = $conn->prepare("INSERT INTO cs_performance (cs_name, performance_score) VALUES (?, ?)");
-    
-    // For now, let's assume the CS name is the desk number
-    $csName = $deskNumber;
-    
-    // Performance score calculation logic can be added here if needed
-    // For now, let's assume a fixed performance score
-    $performanceScore = 10;
-
-    $stmt->bind_param("si", $csName, $performanceScore);
-    
-    if ($stmt->execute()) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    $stmt->close();
+// Jika queue_id dipilih, arahkan ke halaman dengan queue_id tersebut
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['queue_id'])) {
+    $queue_id = $_POST['queue_id'];
+    header("Location: cs.php?queue_id=" . $queue_id);
+    exit();
 }
 ?>
 
@@ -72,44 +45,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['recordIssue'])) {
 
 <div class="container">
     <h2>Customer Service Panel</h2>
-    <ul class="nav nav-tabs" id="csTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="cs-tab" data-toggle="tab" href="#cs" role="tab" aria-controls="cs" aria-selected="true">Manage Customer Service</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="logout-tab" aria-controls="logout" aria-selected="false" onclick="javascript:return confirm('Apakah Anda yakin ingin logout?');" href="../autentikasi/logout.php">Logout</></a>
-        </li>
-    </ul>
+    <?php if (!isset($_GET['queue_id'])): ?>
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="queue_id">Pilih Queue ID</label>
+                <div>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<button type='submit' class='btn btn-primary m-1' name='queue_id' value='" . $row['id'] . "'>Queue Number: " . $row['queue_number'] . "</button>";
+                        }
+                    } else {
+                        echo "<p>Tidak ada nomor antrian yang belum dilayani.</p>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </form>
+    <?php else: ?>
+        <?php
+        // Mendapatkan Queue ID dari URL
+        $queue_id = $_GET['queue_id'];
 
-    <div style="margin-top: 17px;" class="tab-content" id="csTabContent">
-        <div class="tab-pane fade show active" id="cs" role="tabpanel" aria-labelledby="cs-tab">
-            <!-- Customer Service management form -->
-            <form id="csForm" method="POST" action="">
-                <div class="form-group">
-                    <label for="deskNumber">Your Desk Number</label>
-                    <input type="number" class="form-control" id="deskNumber" name="deskNumber" placeholder="Masukkan desk number" required>
-                </div>
-            </form>
-            <!-- Form to record issue -->
-            <form id="recordForm" class="mt-3" method="POST" action="">
-                <div class="form-group">
-                    <label for="customerQueueNumber">Customer Queue Number</label>
-                    <input type="number" class="form-control" id="customerQueueNumber" name="customerQueueNumber" placeholder="Masukkan customer queue number" required>
-                </div>
-                <div class="form-group">
-                    <label for="issue">Issue</label>
-                    <textarea class="form-control" id="issue" name="issue" rows="3" placeholder="Masukkan issue" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="solution">Solution</label>
-                    <textarea class="form-control" id="solution" name="solution" rows="3" placeholder="Masukkan solution" required></textarea>
-                </div>
-                <!-- Hidden field to store desk number -->
-                <input type="hidden" name="deskNumber" id="hiddenDeskNumber">
-                <button type="submit" class="btn btn-primary" name="recordIssue">Record</button>
-            </form>
-        </div>
-    </div>
+        // Query untuk mendapatkan detail antrian berdasarkan queue_id
+        $queueQuery = "SELECT queue_number FROM queue WHERE id = $queue_id";
+        $queueResult = $conn->query($queueQuery);
+        $queueData = $queueResult->fetch_assoc();
+        $queue_number = $queueData['queue_number'];
+        ?>
+        <form id="recordForm" class="mt-3" method="POST" action="">
+            <div class="form-group">
+                <label for="deskNumber">Your Desk Number</label>
+                <input type="number" class="form-control" id="deskNumber" name="deskNumber" placeholder="Masukkan desk number" required>
+            </div>
+            <div class="form-group">
+                <label for="customerQueueNumber">Customer Queue Number</label>
+                <input type="text" class="form-control" id="customerQueueNumber" name="customerQueueNumber" value="<?php echo $queue_number; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="issue">Issue</label>
+                <textarea class="form-control" id="issue" name="issue" rows="3" placeholder="Masukkan issue" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="solution">Solution</label>
+                <textarea class="form-control" id="solution" name="solution" rows="3" placeholder="Masukkan solution" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" name="recordIssue">Record</button>
+        </form>
+    <?php endif; ?>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -119,5 +102,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['recordIssue'])) {
 </html>
 
 <?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['recordIssue'])) {
+    $deskNumber = $_POST['deskNumber'];
+    $issue = $_POST['issue'];
+    $solution = $_POST['solution'];
+    $queue_id = $_POST['customerQueueNumber']; // Mengambil queue_id dari form input
+
+    // Insert data into customer_issues table
+    $stmt = $conn->prepare("INSERT INTO customer_issues (desk_number, customer_queue_number, issue, solution) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iiss", $deskNumber, $queue_id, $issue, $solution);
+    
+    if ($stmt->execute()) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Update status_pelayanan in queue table
+    $updateStmt = $conn->prepare("UPDATE queue SET status_pelayanan = 'sudah_dilayani' WHERE id = ?");
+    $updateStmt->bind_param("i", $queue_id);
+    $updateStmt->execute();
+
+    $stmt->close();
+    $updateStmt->close();
+    header("Location: cs.php");
+    exit();
+}
+
 $conn->close();
 ?>

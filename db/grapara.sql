@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2024 at 08:57 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 05 Jun 2024 pada 14.20
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cs_performance`
+-- Struktur dari tabel `cs_performance`
 --
 
 CREATE TABLE `cs_performance` (
@@ -34,7 +34,7 @@ CREATE TABLE `cs_performance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cs_performance`
+-- Dumping data untuk tabel `cs_performance`
 --
 
 INSERT INTO `cs_performance` (`id`, `cs_name`, `performance_score`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `cs_performance` (`id`, `cs_name`, `performance_score`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_issues`
+-- Struktur dari tabel `customer_issues`
 --
 
 CREATE TABLE `customer_issues` (
@@ -58,19 +58,20 @@ CREATE TABLE `customer_issues` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `customer_issues`
+-- Dumping data untuk tabel `customer_issues`
 --
 
 INSERT INTO `customer_issues` (`id`, `desk_number`, `customer_queue_number`, `issue`, `solution`) VALUES
 (1, 0, 1234, 'perbaikan sinyal', 'restart handphone'),
 (2, 0, 4, 'perbaikan sinyal', 'restart handphone'),
 (3, 0, 123, 'dsfsdv', 'advazdva'),
-(4, 0, 1234, 'rdzcvzdvd', 'svadf4wfaedfda');
+(4, 0, 1234, 'rdzcvzdvd', 'svadf4wfaedfda'),
+(5, 2, 1, 'hp rusak', 'beli baru');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `desks`
+-- Struktur dari tabel `desks`
 --
 
 CREATE TABLE `desks` (
@@ -79,7 +80,7 @@ CREATE TABLE `desks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `desks`
+-- Dumping data untuk tabel `desks`
 --
 
 INSERT INTO `desks` (`id`, `desk_number`) VALUES
@@ -91,34 +92,36 @@ INSERT INTO `desks` (`id`, `desk_number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `queue`
+-- Struktur dari tabel `queue`
 --
 
 CREATE TABLE `queue` (
   `id` int(11) NOT NULL,
   `phone` varchar(15) NOT NULL,
-  `queue_number` int(11) NOT NULL
+  `queue_number` int(11) NOT NULL,
+  `status_pelayanan` varchar(10) DEFAULT 'belum'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `queue`
+-- Dumping data untuk tabel `queue`
 --
 
-INSERT INTO `queue` (`id`, `phone`, `queue_number`) VALUES
-(1, '087888698891', 1),
-(2, '087738919399', 2),
-(3, '087888698896', 3),
-(4, '087888698891', 4),
-(5, '087738919399', 5),
-(6, '085175280207', 6),
-(7, '01982791232', 7),
-(8, '08156405549', 8),
-(9, '08156405549', 9);
+INSERT INTO `queue` (`id`, `phone`, `queue_number`, `status_pelayanan`) VALUES
+(1, '087888698891', 1, 'sudah_dila'),
+(2, '087738919399', 2, 'belum'),
+(3, '087888698896', 3, 'belum'),
+(4, '087888698891', 4, 'belum'),
+(5, '087738919399', 5, 'belum'),
+(6, '085175280207', 6, 'belum'),
+(7, '01982791232', 7, 'belum'),
+(8, '08156405549', 8, 'belum'),
+(9, '08156405549', 9, 'belum'),
+(10, '08888888', 10, 'belum');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `service_stats`
+-- Struktur dari tabel `service_stats`
 --
 
 CREATE TABLE `service_stats` (
@@ -131,7 +134,7 @@ CREATE TABLE `service_stats` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -142,7 +145,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
@@ -155,7 +158,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `weekly_report`
+-- Struktur dari tabel `weekly_report`
 --
 
 CREATE TABLE `weekly_report` (
@@ -169,89 +172,89 @@ CREATE TABLE `weekly_report` (
 --
 
 --
--- Indexes for table `cs_performance`
+-- Indeks untuk tabel `cs_performance`
 --
 ALTER TABLE `cs_performance`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `customer_issues`
+-- Indeks untuk tabel `customer_issues`
 --
 ALTER TABLE `customer_issues`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `desks`
+-- Indeks untuk tabel `desks`
 --
 ALTER TABLE `desks`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `queue`
+-- Indeks untuk tabel `queue`
 --
 ALTER TABLE `queue`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `service_stats`
+-- Indeks untuk tabel `service_stats`
 --
 ALTER TABLE `service_stats`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `weekly_report`
+-- Indeks untuk tabel `weekly_report`
 --
 ALTER TABLE `weekly_report`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `cs_performance`
+-- AUTO_INCREMENT untuk tabel `cs_performance`
 --
 ALTER TABLE `cs_performance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `customer_issues`
+-- AUTO_INCREMENT untuk tabel `customer_issues`
 --
 ALTER TABLE `customer_issues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `desks`
+-- AUTO_INCREMENT untuk tabel `desks`
 --
 ALTER TABLE `desks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `queue`
+-- AUTO_INCREMENT untuk tabel `queue`
 --
 ALTER TABLE `queue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `service_stats`
+-- AUTO_INCREMENT untuk tabel `service_stats`
 --
 ALTER TABLE `service_stats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `weekly_report`
+-- AUTO_INCREMENT untuk tabel `weekly_report`
 --
 ALTER TABLE `weekly_report`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
