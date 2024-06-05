@@ -1,16 +1,24 @@
 <?php
+// Koneksi database
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "grapara";
 
-// Create connection
+// Buat koneksi database
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Cek koneksi
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Cek status login
+session_start();
+  if (!isset($_SESSION['status']))
+   {
+      header("location:../index.php?pesan=belum_login");
+   }
 
 // Handle login
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deskNumber'])) {
@@ -21,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deskNumber'])) {
     // For now, let's assume the desk number is valid and proceed
 }
 
-// Handle recording issue
+// Query rekam permasalahan customer
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['recordIssue'])) {
     $deskNumber = $_POST['deskNumber'];
     $customerQueueNumber = $_POST['customerQueueNumber'];
@@ -48,15 +56,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['recordIssue'])) {
 
     $stmt->close();
 }
-
-$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Service - Grapara</title>
+    <link rel="icon" type="image/x-icon" href="../images/cs_logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../styles.css">
 </head>
@@ -109,3 +117,7 @@ $conn->close();
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+<?php
+$conn->close();
+?>

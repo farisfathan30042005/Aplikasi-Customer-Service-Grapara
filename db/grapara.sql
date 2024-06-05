@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2024 at 10:41 PM
+-- Generation Time: May 27, 2024 at 08:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,8 @@ CREATE TABLE `cs_performance` (
 INSERT INTO `cs_performance` (`id`, `cs_name`, `performance_score`) VALUES
 (1, '', 10),
 (2, '', 10),
-(3, '', 10);
+(3, '', 10),
+(4, '', 10);
 
 -- --------------------------------------------------------
 
@@ -108,7 +109,11 @@ INSERT INTO `queue` (`id`, `phone`, `queue_number`) VALUES
 (2, '087738919399', 2),
 (3, '087888698896', 3),
 (4, '087888698891', 4),
-(5, '087738919399', 5);
+(5, '087738919399', 5),
+(6, '085175280207', 6),
+(7, '01982791232', 7),
+(8, '08156405549', 8),
+(9, '08156405549', 9);
 
 -- --------------------------------------------------------
 
@@ -143,7 +148,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 (1, 'admin', 'admin', 'Admin'),
 (2, 'kautsar', 'kautsar', 'Manager'),
-(3, 'faris', 'faris', 'CS');
+(3, 'faris', 'faris', 'CS'),
+(8, 'haidar', 'haidar', 'Admin'),
+(9, 'gaji', 'gaji', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -211,7 +218,7 @@ ALTER TABLE `weekly_report`
 -- AUTO_INCREMENT for table `cs_performance`
 --
 ALTER TABLE `cs_performance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer_issues`
@@ -229,7 +236,7 @@ ALTER TABLE `desks`
 -- AUTO_INCREMENT for table `queue`
 --
 ALTER TABLE `queue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `service_stats`
@@ -241,7 +248,7 @@ ALTER TABLE `service_stats`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `weekly_report`

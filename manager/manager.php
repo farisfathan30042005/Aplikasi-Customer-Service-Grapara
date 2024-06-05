@@ -1,16 +1,24 @@
 <?php
+// Koneksi database
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "grapara";
 
-// Create connection
+// Buat koneksi database
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Cek koneksi
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Cek status login
+session_start();
+  if (!isset($_SESSION['status']))
+   {
+      header("location:../index.php?pesan=belum_login");
+   }
 
 // Fetch service statistics
 $serviceStatsQuery = "SELECT * FROM service_stats";
@@ -41,6 +49,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager - Grapara</title>
+    <link rel="icon" type="image/x-icon" href="../images/cs_logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>

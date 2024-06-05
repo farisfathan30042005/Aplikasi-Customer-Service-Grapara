@@ -1,40 +1,65 @@
 <?php
+// Koneksi database
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "grapara";
 
-// Create connection
+// Buat koneksi database
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Cek koneksi
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle add user
+// Cek status login
+session_start();
+  if (!isset($_SESSION['status']))
+   {
+      header("location:../index.php?pesan=belum_login");
+   }
+
+// Query tambah data user
 if (isset($_POST['addUser'])) {
     $username = $_POST['username'];
+    $password = $_POST['password'];
     $role = $_POST['role'];
-    $sql = "INSERT INTO users (username, role) VALUES ('$username', '$role')";
+    $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$password', '$role')";
     $conn->query($sql);
 }
 
-// Handle delete user
+// Query ubah data user
+if (isset($_POST['updateUser'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
+    $sql = "UPDATE users SET username = $username, password = $password, role = $role WHERE id = $id";
+    $conn->query($sql);
+}
+
+// Query hapus data user
 if (isset($_POST['deleteUser'])) {
     $id = $_POST['userId'];
     $sql = "DELETE FROM users WHERE id = $id";
     $conn->query($sql);
 }
 
-// Handle add desk
+// Query tambah data meja CS
 if (isset($_POST['addDesk'])) {
     $deskNumber = $_POST['deskNumber'];
     $sql = "INSERT INTO desks (desk_number) VALUES ($deskNumber)";
     $conn->query($sql);
 }
 
-// Handle delete desk
+// Query ubah data meja CS
+if (isset($_POST['updateDesk'])) {
+    $deskNumber = $_POST['deskNumber'];
+    $sql = "UPDATE desks SET desk_number = $deskNumber WHERE id = $id";
+    $conn->query($sql);
+}
+
+// Query hapus data meja CS
 if (isset($_POST['deleteDesk'])) {
     $id = $_POST['deskId'];
     $sql = "DELETE FROM desks WHERE id = $id";
@@ -48,6 +73,7 @@ if (isset($_POST['deleteDesk'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Grapara</title>
+    <link rel="icon" type="image/x-icon" href="../images/cs_logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../styles.css">
 </head>
@@ -76,6 +102,11 @@ if (isset($_POST['deleteDesk'])) {
                     <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
                 </div>
                 <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+                    <input type="checkbox" onclick="showHidePwd()"> Show Password
+                </div>
+                <div class="form-group">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role" required>
                         <option value="Admin">Admin</option>
@@ -91,6 +122,7 @@ if (isset($_POST['deleteDesk'])) {
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
+                        <th>Password</th>
                         <th>Role</th>
                         <th>Actions</th>
                     </tr>
@@ -102,10 +134,14 @@ if (isset($_POST['deleteDesk'])) {
                         echo "<tr>
                                 <td>{$row['id']}</td>
                                 <td>{$row['username']}</td>
+                                <td><input type='password' id='passwordTb' name='passwordTb' value='{$row['password']}' style='border: 0; background: #f0f0f0; width: 80px;' disabled>
+                                </td>
                                 <td>{$row['role']}</td>
                                 <td>
                                     <form method='POST' action='' style='display:inline-block;'>
                                         <input type='hidden' name='userId' value='{$row['id']}'>
+                                        <a href='view_manageuser.php' class='btn btn-success btn-sm'>View</a>
+                                        <a href='edit_manageuser.php' class='btn btn-warning btn-sm'>Edit</a>
                                         <button type='submit' name='deleteUser' class='btn btn-danger btn-sm'>Delete</button>
                                     </form>
                                 </td>
@@ -144,6 +180,8 @@ if (isset($_POST['deleteDesk'])) {
                                 <td>
                                     <form method='POST' action='' style='display:inline-block;'>
                                         <input type='hidden' name='deskId' value='{$row['id']}'>
+                                        <a href='view_deskmanage.php' class='btn btn-success btn-sm'>View</a>
+                                        <a href='edit_deskmanage.php' class='btn btn-warning btn-sm'>Edit</a>
                                         <button type='submit' name='deleteDesk' class='btn btn-danger btn-sm'>Delete</button>
                                     </form>
                                 </td>
@@ -155,6 +193,17 @@ if (isset($_POST['deleteDesk'])) {
         </div>
     </div>
 </div>
+
+<script>
+    function showHidePwd() {
+      var x = document.getElementById("password");
+        if (x.type != "password") {
+            x.type = "password";
+        } else {
+            x.type = "text";
+        }
+    }
+</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
